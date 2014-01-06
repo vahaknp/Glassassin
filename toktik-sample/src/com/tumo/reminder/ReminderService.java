@@ -15,6 +15,7 @@ public class ReminderService extends Service {
 
 	private static final String LIVE_CARD_TAG = "reminder_tag";
 	private LiveCard mLiveCard;
+	private TimelineManager tm;
 	
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -23,18 +24,27 @@ public class ReminderService extends Service {
 	
 	@Override
 	public void onCreate() {
+		tm = TimelineManager.from(this);
 		Toast.makeText(this, "ReminderService onCreate", Toast.LENGTH_SHORT).show();
 	}
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		Toast.makeText(this, "ReminderService onStartCommand", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "ReminderService onStartCommand", Toast.LENGTH_LONG).show();
 		return START_STICKY;
+	}
+	
+	@Override
+	public void onDestroy() {
+		if (mLiveCard != null && mLiveCard.isPublished()) {
+			mLiveCard.unpublish();
+			mLiveCard = null;
+		}
+		super.onDestroy();
 	}
 	
 	private void publishCard(Context context) {
 		if(mLiveCard == null) {
-			TimelineManager tm = TimelineManager.from(this);
 			mLiveCard = tm.createLiveCard(LIVE_CARD_TAG);
 			
 //			mLiveCard.setViews(new RemoteViews(context.getPackageName(),

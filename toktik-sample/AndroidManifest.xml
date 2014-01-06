@@ -18,13 +18,16 @@
             android:name="com.tumo.reminder.MainActivity"
             android:label="@string/app_name"
             android:icon="@drawable/ic_launcher">
-            <intent-filter>
+        </activity>
+        
+        <service android:name="com.tumo.reminder.ReminderService">
+        	<intent-filter>
                 <action
                     android:name="com.google.android.glass.action.VOICE_TRIGGER" />
             </intent-filter>
             <meta-data android:name="com.google.android.glass.VoiceTrigger"
                 android:resource="@xml/voice_trigger" />
-        </activity>
+        </service>
     </application>
 
 </manifest>
