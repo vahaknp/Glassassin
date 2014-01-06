@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">HelloWorldImmersion</string>
+    <string name="app_name">ToktikMy</string>
     <string name="hello_world"></string>
-    <string name="voice_command">Tumo demo</string>
-    
+    <string name="voice_command">Run sample app</string>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.example.lucky;
+package com.example.toktiksample;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,8 +12,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         Card card = new Card(this);
-        card.setText("Hello Tumo!");
-        card.setFootnote("glass workshop");
+        card.setText("This is sample app! That works.");
+        card.setFootnote("at Tumo...");
 
         setContentView(card.toView());
 	}
