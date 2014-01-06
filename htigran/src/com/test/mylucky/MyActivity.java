@@ -13,69 +13,32 @@ import android.widget.TextView;
 import android.provider.MediaStore;
 import com.google.android.glass.timeline.LiveCard;
 import com.google.android.glass.timeline.TimelineManager;
+import com.google.android.glass.app.Card;
+import android.net.Uri;
 
 public class MyActivity extends Activity {
 
-//	// Tag used to identify the LiveCard in debugging logs.
-//	private static final String LIVE_CARD_TAG = "my_card";
-//
-//	// Cached instance of the LiveCard created by the publishCard() method.
-//	private LiveCard mLiveCard;
-//
-//	private void publishCard(Context context) {
-//		if (mLiveCard == null) {
-//			TimelineManager tm = TimelineManager.from(context);
-//			mLiveCard = tm.createLiveCard(LIVE_CARD_TAG);
-//
-//			mLiveCard.setViews(new RemoteViews(context.getPackageName(),
-//					R.layout.card_text));
-//			Intent intent = new Intent(context, CardActivity.class);
-//			mLiveCard.setAction(PendingIntent
-//					.getActivity(context, 0, intent, 0));
-//			mLiveCard.publish(LiveCard.PublishMode.SILENT);
-//		} else {
-//			// Card is already published.
-//			return;
-//		}
-//	}
-//
-//	private void unpublishCard(Context context) {
-//		if (mLiveCard != null) {
-//			mLiveCard.unpublish();
-//			mLiveCard = null;
-//		}
-//	}
 	private static final int TAKE_PICTURE_REQUEST = 1;
-		
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 			
 		super.onCreate(savedInstanceState);
-
+		Card card = new Card(this);
+				
 		ArrayList<String> voiceResults = getIntent().getExtras()
 				.getStringArrayList(RecognizerIntent.EXTRA_RESULTS);
 
 		String res = voiceResults.get(0);
 		
 		if(res.equals("compare")) {
-			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		    startActivityForResult(intent, TAKE_PICTURE_REQUEST);
-		}
-		
-		
-		
-//		if (res.equals("publish")) {
-//			publishCard(this);
-//		} else if (res.equals("unpublish")) {
-//			unpublishCard(this);
-//		}
-//
-//		setContentView(R.layout.main);
-//
-//		TextView tv = (TextView) findViewById(R.id.livecard_content_main);
-//		tv.setText(res);
-		
-		
+			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);		    
+		    startActivityForResult(intent, TAKE_PICTURE_REQUEST);	    
+		    System.out.println(intent);
+//	        card.setText("Comparing photo");       
+	        
+//	        setContentView(card.toView());
+		}		
 		
 	}
 
