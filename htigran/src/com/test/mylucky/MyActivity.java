@@ -11,9 +11,12 @@ import android.speech.RecognizerIntent;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.provider.MediaStore;
+
+import com.google.android.glass.media.CameraManager;
 import com.google.android.glass.timeline.LiveCard;
 import com.google.android.glass.timeline.TimelineManager;
 import com.google.android.glass.app.Card;
+import android.hardware.Camera;
 import android.net.Uri;
 
 public class MyActivity extends Activity {
@@ -34,14 +37,22 @@ public class MyActivity extends Activity {
 		if(res.equals("compare")) {
 			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);		    
 		    startActivityForResult(intent, TAKE_PICTURE_REQUEST);	    
-		    System.out.println(intent);
-//	        card.setText("Comparing photo");       
-	        
-//	        setContentView(card.toView());
+		    String picturePath = intent.getStringExtra(CameraManager.EXTRA_PICTURE_FILE_PATH);		    
+	        card.setText(picturePath);         
+	        setContentView(card.toView());
 		}		
 		
 	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    if (requestCode == TAKE_PICTURE_REQUEST && resultCode == RESULT_OK) {
+	        
+	    }
 
+	    super.onActivityResult(requestCode, resultCode, data);
+	}
+	
 	@Override
 	protected void onResume() {
 		super.onResume();
