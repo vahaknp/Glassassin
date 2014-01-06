@@ -4,5 +4,6 @@
     <string name="app_name">ToktikMy</string>
     <string name="hello_world"></string>
     <string name="voice_command">Run sample app</string>
+    <string name="glass_voice_prompt">Where are you?</string>
 
 </resources>
