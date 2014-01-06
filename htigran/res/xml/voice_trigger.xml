@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<trigger keyword="@string/voice_command" >
+    <constraints
+        camera="true" />
+	<input prompt="@string/glass_voice_prompt"></input>
+</trigger>

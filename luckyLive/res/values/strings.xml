@@ -3,7 +3,7 @@
 
     <string name="app_name">HelloWorldImmersion</string>
     <string name="hello_world"></string>
-    <string name="voice_command">Tumo demo</string>
+    <string name="voice_command">Cat</string>
     
 
 </resources>
