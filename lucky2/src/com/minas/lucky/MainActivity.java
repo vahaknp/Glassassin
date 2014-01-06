@@ -1,4 +1,4 @@
-package com.example.lucky;
+package com.minas.lucky;
 
 import java.util.ArrayList;
 import java.util.Arrays;
