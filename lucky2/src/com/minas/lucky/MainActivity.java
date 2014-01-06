@@ -2,7 +2,6 @@ package com.minas.lucky;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
@@ -15,7 +14,7 @@ import com.google.android.glass.app.Card;
 public class MainActivity extends Activity {
 
 	private List<String> hardcodedNicks = new ArrayList<String>(Arrays.asList(
-			"long hair", "green", "red hat"));
+			"long hair", "green", "red hat", "don't care"));
 	private List<String> nicks = new ArrayList<String>();
 	private Card mCard;
 
@@ -55,5 +54,4 @@ public class MainActivity extends Activity {
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-
 }
