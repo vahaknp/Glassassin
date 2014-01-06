@@ -52,5 +52,6 @@ public class MyActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		setContentView(R.layout.card_text);
 	}
 }
