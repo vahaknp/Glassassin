@@ -3,49 +3,12 @@ package com.test.mylucky;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.widget.RemoteViews;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.glass.timeline.LiveCard;
-import com.google.android.glass.timeline.TimelineManager;
 
 public class MyActivity extends Activity {
-
-	// Tag used to identify the LiveCard in debugging logs.
-	private static final String LIVE_CARD_TAG = "my_card";
-
-	// Cached instance of the LiveCard created by the publishCard() method.
-	private LiveCard mLiveCard;
-
-	private void publishCard(Context context) {
-		if (mLiveCard == null) {
-			TimelineManager tm = TimelineManager.from(context);
-			mLiveCard = tm.createLiveCard(LIVE_CARD_TAG);
-
-			mLiveCard.setViews(new RemoteViews(context.getPackageName(),
-					R.layout.card_text));
-			Intent intent = new Intent(context, CardActivity.class);
-			mLiveCard.setAction(PendingIntent
-					.getActivity(context, 0, intent, 0));
-			mLiveCard.publish(LiveCard.PublishMode.SILENT);
-		} else {
-			// Card is already published.
-			return;
-		}
-	}
-
-	private void unpublishCard(Context context) {
-		if (mLiveCard != null) {
-			mLiveCard.unpublish();
-			mLiveCard = null;
-		}
-	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +18,10 @@ public class MyActivity extends Activity {
 				.getStringArrayList(RecognizerIntent.EXTRA_RESULTS);
 
 		String res = voiceResults.get(0);
-		if (res.equals("cat") || res.equals("published")) {
-			Toast.makeText(this, "Toast_start", Toast.LENGTH_SHORT).show();
-			publishCard(this);
-		} else if (res.toLowerCase().equals("apple") || res.equals("unpublished") || res.equals("I'm published")) {
-			Toast.makeText(this, "Toast_stop", Toast.LENGTH_SHORT).show();
-			unpublishCard(this);
+		if (res.equals("begin") || res.equals("start") || res.equals("cat")) {
+			startService(new Intent(this, LiveCardService.class));
+		} else if (res.equals("stop")) {
+			stopService(new Intent(this, LiveCardService.class));
 		}
 
 		setContentView(R.layout.main);
