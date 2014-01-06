@@ -1,0 +1,46 @@
+apply plugin: 'android'
+
+/*
+tasks.withType(Compile) { 
+    options.compilerArgs << "-Xlint:deprecation" 
+    options.compilerArgs << "-Xlint:unchecked" 
+} 
+*/
+
+
+repositories {
+    mavenCentral()
+}
+
+android {
+    compileSdkVersion 17
+    buildToolsVersion "19.0.0"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 15
+    }
+    buildTypes {
+        release {
+//            runProguard true
+//            proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
+            // Using the debug config for now...
+            signingConfig signingConfigs.debug
+        }
+    }
+//    productFlavors {
+//        defaultFlavor {
+//            proguardFile 'proguard-rules.txt'
+//        }
+//    }
+}
+
+dependencies {
+	// compile 'com.android.support:support-v4:18.0.0'
+	// compile 'com.android.support:appcompat-v7:18.0.+'
+	// compile 'com.google.android.gms:play-services:4.0.30'
+
+    compile fileTree(dir: '../gdk/libs', include: '*.jar')
+    compile fileTree(dir: 'libs', include: '*.jar')
+
+}

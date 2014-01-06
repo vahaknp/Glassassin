@@ -1,4 +1,4 @@
-package com.example.lucky;
+package com.example.luckyLive;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         Card card = new Card(this);
-        card.setText("Hello world!");
+        card.setText("Hello Tumo!");
         card.setFootnote("glass workshop");
 
         setContentView(card.toView());
