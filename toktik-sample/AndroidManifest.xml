@@ -15,7 +15,7 @@
         android:theme="@android:style/Theme.DeviceDefault" >
 
         <activity
-            android:name="com.example.toktiksample.MainActivity"
+            android:name="com.tumo.reminder.MainActivity"
             android:label="@string/app_name"
             android:icon="@drawable/ic_launcher">
             <intent-filter>

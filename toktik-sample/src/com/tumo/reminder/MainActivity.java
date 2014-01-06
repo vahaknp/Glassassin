@@ -1,8 +1,9 @@
-package com.example.toktiksample;
+package com.tumo.reminder;
 
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 
@@ -17,11 +18,11 @@ public class MainActivity extends Activity {
         ArrayList<String> voiceResults = getIntent().getExtras()
         		.getStringArrayList(RecognizerIntent.EXTRA_RESULTS);
         
-        Card card = new Card(this);
-        card.setText("This is sample app! That works.");
-        card.setFootnote(voiceResults.get(0) + " is great place!");
-
-        setContentView(card.toView());
+        // start reminder service
+        Intent serviceIntent = new Intent();
+        serviceIntent.setAction("com.tumo.reminder.ReminderService");
+        serviceIntent.putExtra("time", voiceResults.get(0).toLowerCase());
+        startService(serviceIntent);
 	}
 
 }

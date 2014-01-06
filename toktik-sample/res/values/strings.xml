@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ToktikMy</string>
-    <string name="hello_world"></string>
-    <string name="voice_command">Run sample app</string>
-    <string name="glass_voice_prompt">Where are you?</string>
+    <string name="app_name">Reminder</string>
+    <string name="voice_command">Remind me in</string>
+    <string name="glass_voice_prompt">When?</string>
 
 </resources>
