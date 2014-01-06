@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.google.android.glass.app.Card;
 
-public class MainActivity extends Activity {
+public class luckyActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

@@ -15,7 +15,7 @@ import com.google.android.glass.app.Card;
 public class MainActivity extends Activity {
 
 	private List<String> hardcodedNicks = new ArrayList<String>(Arrays.asList(
-			"long hair", "green eyes", "red hat"));
+			"long hair", "green", "red hat"));
 	private List<String> nicks = new ArrayList<String>();
 	private Card mCard;
 
@@ -25,7 +25,7 @@ public class MainActivity extends Activity {
 
 		mCard = new Card(this);
 		setContentView(mCard.toView());
-		
+
 		displaySpeechRecognizer();
 	}
 
@@ -43,17 +43,14 @@ public class MainActivity extends Activity {
 					.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 			String spokenText = results.get(0);
 
-			if (!spokenText.equals("done")) {
+			if (!spokenText.equals("stop")) {
 				nicks.add(spokenText);
 				displaySpeechRecognizer();
 			} else {
 				hardcodedNicks.retainAll(nicks);
 
-				if (Collections.indexOfSubList(hardcodedNicks, nicks) != -1) {
-					mCard.setText(hardcodedNicks.size() + " --- " + hardcodedNicks);
-					mCard.setFootnote("number of matches");
-				}
-
+				mCard.setText(hardcodedNicks.size() + " --- " + hardcodedNicks);
+				mCard.setFootnote("number of matches");
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);
