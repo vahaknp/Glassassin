@@ -24,8 +24,8 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		mCard = new Card(this);
-		
-		
+		setContentView(mCard.toView());
+
 		displaySpeechRecognizer();
 	}
 
@@ -49,12 +49,8 @@ public class MainActivity extends Activity {
 			} else {
 				hardcodedNicks.retainAll(nicks);
 
-				if (Collections.indexOfSubList(hardcodedNicks, nicks) != -1) {
-					mCard.setText(hardcodedNicks.size() + " --- " + hardcodedNicks);
-					mCard.setFootnote("number of matches");
-					setContentView(mCard.toView());
-				}
-
+				mCard.setText(hardcodedNicks.size() + " --- " + hardcodedNicks);
+				mCard.setFootnote("number of matches");
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);

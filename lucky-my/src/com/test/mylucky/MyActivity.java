@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.widget.RemoteViews;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.glass.timeline.LiveCard;
 import com.google.android.glass.timeline.TimelineManager;
@@ -54,9 +55,11 @@ public class MyActivity extends Activity {
 				.getStringArrayList(RecognizerIntent.EXTRA_RESULTS);
 
 		String res = voiceResults.get(0);
-		if (res.equals("publish")) {
+		if (res.equals("cat") || res.equals("published")) {
+			Toast.makeText(this, "Toast_start", Toast.LENGTH_SHORT).show();
 			publishCard(this);
-		} else if (res.equals("unpublish")) {
+		} else if (res.toLowerCase().equals("apple") || res.equals("unpublished") || res.equals("I'm published")) {
+			Toast.makeText(this, "Toast_stop", Toast.LENGTH_SHORT).show();
 			unpublishCard(this);
 		}
 
