@@ -12,7 +12,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         Card card = new Card(this);
-        card.setText("Hello Tumo!");
+        card.setText("Hello world!");
         card.setFootnote("glass workshop");
 
         setContentView(card.toView());
