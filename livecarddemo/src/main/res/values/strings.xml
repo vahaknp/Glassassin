@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">LiveCard Demo</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="livecarddemo_screen_content">LiveCard Demo\nIs Now Live</string>
+    <string name="livecarddemo_livecard_content">LiveCard Demo\nIs Currently Active</string>
+
+    <!--  LiveCardDemoLocalService  -->
+    <string name="livecarddemo_localservice_started">LiveCard Demo Service started.</string>
+
+    <!--  For voice input  -->
+    <string name="livecarddemo_voice_trigger">start live card demo</string>
+    <string name="livecarddemo_voice_prompt">livecard demo is on</string>
+
+    <!--  For menu  -->
+    <string name="menu_item_stop_livecarddemo">Stop</string>
+
+</resources>
