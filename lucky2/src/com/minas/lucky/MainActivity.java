@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
 		Card card = new Card(this);
 
 		if (Collections.indexOfSubList(hardcodedNicks, nicks) != -1) {
-			card.setText(nicks.get(0));
+			card.setText("cool");
 			card.setFootnote("glass workshop");
 		}
 
@@ -49,7 +49,7 @@ public class MainActivity extends Activity {
 			String spokenText = results.get(0);
 			// Do something with spokenText.
 
-			if (spokenText != "done") {
+			if (!spokenText.equals("done") ) {
 				nicks.add(spokenText);
 				displaySpeechRecognizer();
 			}

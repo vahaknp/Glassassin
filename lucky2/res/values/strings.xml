@@ -3,7 +3,7 @@
 
     <string name="app_name">Nickinja</string>
     <string name="hello_world"></string>
-    <string name="voice_command">Tumo demo</string>
+    <string name="voice_command">input nicks</string>
     
 
 </resources>
