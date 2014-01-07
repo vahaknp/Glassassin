@@ -26,7 +26,6 @@ public class ReminderService extends Service {
 	@Override
 	public void onCreate() {
 		tm = TimelineManager.from(this);
-		Toast.makeText(this, "ReminderService onCreate", Toast.LENGTH_LONG).show();
 	}
 	
 	@Override
@@ -36,8 +35,6 @@ public class ReminderService extends Service {
 		String transcription = voiceResults.get(0);
 		
 		Reminder reminder = new Reminder(this, transcription);
-		
-		Toast.makeText(this, "ReminderService onStartCommand", Toast.LENGTH_LONG).show();
 		return START_STICKY;
 	}
 	

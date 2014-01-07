@@ -6,11 +6,15 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.widget.Toast;
 
 public class Reminder {
 	ReminderService service;
-	String seconds;
+	Integer seconds;
+	String about;
 	
 	HashMap<String, Integer> unitToSecond = new HashMap<String, Integer>(); 
 	
@@ -22,20 +26,24 @@ public class Reminder {
 		unitToSecond.put("hour", 60 * 60);
 		
 		try {
-			Integer seconds = stringToSeconds(transcription);
+			seconds = stringToSeconds(transcription);
+			about = stringToAbout(transcription);
+			startTimer();
 		} catch(Exception e) {
 			Toast.makeText(service, e.getMessage(), Toast.LENGTH_LONG).show();
-		}		
+		}
 	}
 	
-	private void startTimer(Integer seconds) {
-		Timer timer = new Timer();
-		timer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				Toast.makeText(service, "Reminding!", Toast.LENGTH_LONG);
-			}
-		}, seconds);
+	private void startTimer() {
+		final Context ctx = service;
+		
+		Handler mHandler = new Handler();
+		Runnable makeToast = new Runnable() {
+		    public void run() {
+		    	Toast.makeText(ctx, about, Toast.LENGTH_LONG).show();
+		    }
+		};
+		mHandler.postDelayed(makeToast, seconds * 1000);
 	}
 	
 	private Integer stringToSeconds(String transcription) throws Exception {
@@ -59,5 +67,14 @@ public class Reminder {
 		}
 		
 		return amount * unitToSecond.get(unitKey);
+	}
+	
+	public String stringToAbout(String transcription) throws Exception {
+		if(!transcription.contains("about ")) {
+			throw new Exception("I don't understand what to remind");
+		}
+		
+		int about_index = transcription.indexOf("about ") + "about ".length();
+		return transcription.substring(about_index);
 	}
 }
