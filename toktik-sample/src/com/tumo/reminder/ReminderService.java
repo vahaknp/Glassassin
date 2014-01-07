@@ -1,5 +1,9 @@
 package com.tumo.reminder;
 
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import com.google.android.glass.timeline.LiveCard;
 import com.google.android.glass.timeline.TimelineManager;
 
@@ -8,6 +12,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -30,6 +35,10 @@ public class ReminderService extends Service {
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		ArrayList<String> voiceResults = intent.getExtras()
+			.getStringArrayList(RecognizerIntent.EXTRA_RESULTS);
+		String time = voiceResults.get(0);
+		
 		Toast.makeText(this, "ReminderService onStartCommand", Toast.LENGTH_LONG).show();
 		return START_STICKY;
 	}
