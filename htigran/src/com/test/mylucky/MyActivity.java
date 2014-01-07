@@ -38,7 +38,9 @@ public class MyActivity extends Activity {
 			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);		    
 		    startActivityForResult(intent, TAKE_PICTURE_REQUEST);	    
 		    String picturePath = intent.getStringExtra(CameraManager.EXTRA_PICTURE_FILE_PATH);		    
-	        card.setText(picturePath);         
+	        card.setText(picturePath); 
+	        card.setImageLayout(Card.ImageLayout.LEFT);
+//	        card.addImage(R.drawable.picturePath);
 	        setContentView(card.toView());
 		}		
 		
