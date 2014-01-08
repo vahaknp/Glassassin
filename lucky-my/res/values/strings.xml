@@ -7,4 +7,9 @@
     <string name="glass_voice_prompt">tell me what\'s on your mind</string>
     <string name="livecard_content">LiveCard Is Now Live</string>
 
+    <!-- For menu -->
+    <string name="menu_item_stop">Stop</string>
+    <string name="menu_item_goto_main">Go To Main</string>
+    <string name="menu_item_service">Test service</string>
+
 </resources>
