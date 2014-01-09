@@ -29,16 +29,9 @@ public class MyActivity extends Activity {
 			
 		super.onCreate(savedInstanceState);
 		
-		ArrayList<String> voiceResults = getIntent().getExtras().getStringArrayList(RecognizerIntent.EXTRA_RESULTS);
-		String res = voiceResults.get(0);
-		
-		Card card = new Card(this);
-        card.setText(res);
-        card.setFootnote("Retry or accept");
-        setContentView(card.toView());
-        customHandler.postDelayed(recognize, 5000);        
+		displaySpeechRecognizer();        
 //		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);		    
-//		startActivityForResult(intent, TAKE_PICTURE_REQUEST);	  
+//		startActivityForResult(intent, TAKE_PICTURE_REQUEST);	 
 		
 	}
 	
@@ -60,9 +53,9 @@ public class MyActivity extends Activity {
 			ArrayList<String> voiceResults = getIntent().getExtras().getStringArrayList(RecognizerIntent.EXTRA_RESULTS);
 			String spokenText = voiceResults.get(0);
 	        
-	        if(spokenText.equals("retry")) {
+	        if(spokenText.equals("new")) {
 	        	displaySpeechRecognizer();
-	        } else if (spokenText.equals("accept")) {
+	        } else if (spokenText.equals("ok")) {
 	        	Card card = new Card(this);
 		        card.setText(spokenText);
 		        card.setFootnote("Accepted");
