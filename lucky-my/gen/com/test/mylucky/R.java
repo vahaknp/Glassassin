@@ -22,31 +22,48 @@ public final class R {
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
+        public static final int ic_no_50=0x7f020001;
+        public static final int ic_run_50=0x7f020002;
+        public static final int ic_sync_50=0x7f020003;
     }
     public static final class id {
-        public static final int livecard_content=0x7f080000;
-        public static final int livecard_content_main=0x7f080001;
+        public static final int livecard_content=0x7f090000;
+        public static final int livecard_content_main=0x7f090001;
+        public static final int menu_card_goto__main=0x7f090003;
+        public static final int menu_card_service=0x7f090004;
+        public static final int menu_card_stop=0x7f090002;
     }
     public static final class layout {
         public static final int card_text=0x7f030000;
         public static final int main=0x7f030001;
+    }
+    public static final class menu {
+        public static final int activity_card=0x7f080000;
+        public static final int activity_main=0x7f080001;
     }
     public static final class string {
         public static final int app_name=0x7f060000;
         public static final int glass_voice_prompt=0x7f060003;
         public static final int hello_world=0x7f060001;
         public static final int livecard_content=0x7f060004;
+        public static final int menu_item_goto_main=0x7f060006;
+        public static final int menu_item_service=0x7f060007;
+        /**  For menu 
+         */
+        public static final int menu_item_stop=0x7f060005;
         public static final int voice_command=0x7f060002;
     }
     public static final class style {
         /** 
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+
     
 
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
+
         
 
         Base application theme for API 11+. This theme completely replaces
@@ -65,6 +82,7 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f070001;
+        public static final int MenuTheme=0x7f070002;
     }
     public static final class xml {
         public static final int voice_trigger=0x7f040000;

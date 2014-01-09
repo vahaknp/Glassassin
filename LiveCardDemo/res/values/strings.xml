@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">LiveCardDemo</string>
+    <string name="voice_command">Live Card Demo</string>
+    <string name="livecard_content">Tap to remove this LiveCard</string>
+
+</resources>
