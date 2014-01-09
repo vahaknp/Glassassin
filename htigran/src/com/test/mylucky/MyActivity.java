@@ -72,7 +72,7 @@ public class MyActivity extends Activity {
 	            card.setText(spokenText);
 	            card.setFootnote("Retry or accept ");
 	            setContentView(card.toView());
-		        displaySpeechRecognizer();
+	            customHandler.postDelayed(recognize, 5000);
 	        }				        
 	    }
 		
