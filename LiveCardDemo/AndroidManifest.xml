@@ -28,8 +28,11 @@
        		</intent-filter>
        		<meta-data
        			android:name="com.google.android.glass.VoiceTrigger"
-        		android:resource="@xml/voice_trigger" />
+        		android:resource="@xml/voice_trigger">
+       		</meta-data>
+       		
         </service>
+        
     </application>
 
 </manifest>
