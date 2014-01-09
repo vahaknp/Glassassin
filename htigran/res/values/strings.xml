@@ -3,8 +3,8 @@
 
     <string name="app_name">HelloWorldImmersion</string>
     <string name="hello_world"></string>
-    <string name="voice_command">compare picture</string>
-    <string name="glass_voice_prompt">tell me what\'s on your mind</string>
+    <string name="voice_command">register</string>
+    <string name="glass_voice_prompt">Tell the first name and last name!</string>
     <string name="livecard_content">LiveCard Is Now Live</string>
 
 </resources>
