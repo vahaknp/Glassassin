@@ -1,23 +1,14 @@
 package com.test.mylucky;
 
 import java.util.ArrayList;
-
 import android.app.Activity;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.widget.RemoteViews;
-import android.widget.TextView;
 import android.provider.MediaStore;
-
 import com.google.android.glass.media.CameraManager;
-import com.google.android.glass.timeline.LiveCard;
-import com.google.android.glass.timeline.TimelineManager;
 import com.google.android.glass.app.Card;
-import android.hardware.Camera;
-import android.net.Uri;
+import android.widget.Toast;
 
 public class MyActivity extends Activity {
 
@@ -26,8 +17,7 @@ public class MyActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 			
-		super.onCreate(savedInstanceState);
-		Card card = new Card(this);
+		super.onCreate(savedInstanceState);		
 				
 		ArrayList<String> voiceResults = getIntent().getExtras()
 				.getStringArrayList(RecognizerIntent.EXTRA_RESULTS);
@@ -36,21 +26,23 @@ public class MyActivity extends Activity {
 		
 		if(res.equals("compare")) {
 			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);		    
-		    startActivityForResult(intent, TAKE_PICTURE_REQUEST);	    
-		    String picturePath = intent.getStringExtra(CameraManager.EXTRA_PICTURE_FILE_PATH);		    
-	        card.setText(picturePath); 
-	        card.setImageLayout(Card.ImageLayout.LEFT);
-//	        card.addImage(R.drawable.picturePath);
-	        setContentView(card.toView());
-		}		
+		    startActivityForResult(intent, TAKE_PICTURE_REQUEST);		    
+		}  
 		
 	}
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-	    if (requestCode == TAKE_PICTURE_REQUEST && resultCode == RESULT_OK) {
-	        
-	    }
+		
+		if (requestCode == TAKE_PICTURE_REQUEST && resultCode == RESULT_OK) {			
+			String picturePath = data.getStringExtra(CameraManager.EXTRA_PICTURE_FILE_PATH);
+//		    Toast.makeText(getApplicationContext(), picturePath, Toast.LENGTH_SHORT).show();		    
+		    Card card = new Card(this);
+	        card.setText(picturePath); 
+	        card.setImageLayout(Card.ImageLayout.LEFT);
+//	      	card.addImage(R.drawable.picturePath);
+	        setContentView(card.toView());	        
+	    }		
 
 	    super.onActivityResult(requestCode, resultCode, data);
 	}
