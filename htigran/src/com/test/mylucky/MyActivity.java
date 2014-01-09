@@ -20,17 +20,22 @@ public class MyActivity extends Activity {
 	private static final int TAKE_PICTURE_REQUEST = 1;
 	private static final int SPEECH_REQUEST = 0;
 	private int iterator_for_name = 0;
-	private Map<String, String> register_player = new HashMap<String, String>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 			
-		super.onCreate(savedInstanceState);		
+		super.onCreate(savedInstanceState);
 		
-//		if(res.equals("compare")) {			
-//			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);		    
-//		    startActivityForResult(intent, TAKE_PICTURE_REQUEST);		    
-//		}  
+		ArrayList<String> voiceResults = getIntent().getExtras().getStringArrayList(RecognizerIntent.EXTRA_RESULTS);
+		String res = voiceResults.get(0);
+		
+		Card card = new Card(this);
+        card.setText(res);
+        card.setFootnote("Retry or accept");
+        setContentView(card.toView());
+        displaySpeechRecognizer();
+//		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);		    
+//		startActivityForResult(intent, TAKE_PICTURE_REQUEST);	  
 		
 	}
 	
@@ -50,22 +55,14 @@ public class MyActivity extends Activity {
 	        	displaySpeechRecognizer();
 	        } else if (spokenText.equals("accept")) {
 	        	Card card = new Card(this);
-		        card.setText(register_player.get("first_name") + " " + register_player.get("last_name"));
+		        card.setText(spokenText);
 		        card.setFootnote("Accepted");
+		        setContentView(card.toView());
 	        } else {
-	        	while (iterator_for_name < 2) {
-	        		StringTokenizer player = new StringTokenizer(spokenText);
-	    			String token = player.nextElement().toString();
-	    			if (iterator_for_name == 0){
-	    				register_player.put("first_name", token);  
-	    			} else {
-	    				register_player.put("last_name", token);
-	    			}					
-	    			iterator_for_name++;
-	    		}
 	        	Card card = new Card(this);
-		        card.setText(register_player.get("first_name") + " " + register_player.get("last_name"));
-		        card.setFootnote("Retry or accept");
+	            card.setText(spokenText);
+	            card.setFootnote("Retry or accept");
+	            setContentView(card.toView());
 		        displaySpeechRecognizer();
 	        }				        
 	    }
