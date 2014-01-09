@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_main_play"
+        android:icon="@drawable/ic_play_50"
+        android:title="@string/menu_item_play"/>
+    <item
+        android:id="@+id/menu_main_manage_db"
+        android:icon="@drawable/ic_gear_50"
+        android:title="@string/menu_item_manage_db"/>
+
+</menu>
