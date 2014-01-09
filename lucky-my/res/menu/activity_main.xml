@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_card_stop"
+        android:icon="@drawable/ic_no_50"
+        android:title="@string/menu_item_stop"/>
+    <item
+        android:id="@+id/menu_card_goto__main"
+        android:icon="@drawable/ic_run_50"
+        android:title="@string/menu_item_goto_main"/>
+
+</menu>
