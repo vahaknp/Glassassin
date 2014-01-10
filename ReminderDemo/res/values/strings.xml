@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ReminderDemo</string>
+    <string name="voice_command">Reminder Demo</string>
+    <string name="reminder_time_prompt">In how much time?</string>
+    <string name="reminder_subject_prompt">About what?</string>
+
+</resources>
