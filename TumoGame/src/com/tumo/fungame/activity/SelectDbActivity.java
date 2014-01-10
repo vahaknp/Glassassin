@@ -22,7 +22,7 @@ public class SelectDbActivity extends Activity {
 
 	public static final String KEY_NAME = "key_name";
 	public static final String KEY_IMAGE = "key_image";
-	
+
 	private List<Card> mCards;
 	private CardScrollView mCardScrollView;
 	private SelectDbScrollAdapter mAdapter;
@@ -61,7 +61,8 @@ public class SelectDbActivity extends Activity {
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 			Card card = (Card) mAdapter.getItem(position);
-			Intent intent = new Intent(SelectDbActivity.this, LiveCardService.class);
+			Intent intent = new Intent(SelectDbActivity.this,
+					LiveCardService.class);
 			Bundle bundle = new Bundle();
 			bundle.putString(KEY_NAME, card.getText());
 			bundle.putParcelable(KEY_IMAGE, card.getImage(0));
@@ -72,32 +73,20 @@ public class SelectDbActivity extends Activity {
 	};
 
 	private void createCards() {
+		List<Player> players = new ArrayList<SelectDbActivity.Player>();
+		players.add(new Player("Messi", "Argentina", R.drawable.messi_2));
+		players.add(new Player("Neymar", "Brazil", R.drawable.neymar));
+		players.add(new Player("Lavezzi", "Argentina", R.drawable.lavezzi));
 		mCards = new ArrayList<Card>();
 
-		Card card;
-
-		card = new Card(this);
-		card.setText("Messi");
-		card.setFootnote("Argentina");
-		card.setImageLayout(Card.ImageLayout.LEFT);
-		card.addImage(R.drawable.messi_1);
-		card.addImage(R.drawable.messi_2);
-		card.addImage(R.drawable.messi_3);
-		mCards.add(card);
-
-		card = new Card(this);
-		card.setText("Neymar");
-		card.setFootnote("Brazil");
-		card.setImageLayout(Card.ImageLayout.LEFT);
-		card.addImage(R.drawable.neymar);
-		mCards.add(card);
-
-		card = new Card(this);
-		card.setText("Lavezzi");
-		card.setFootnote("Argentina");
-		card.setImageLayout(Card.ImageLayout.LEFT);
-		card.addImage(R.drawable.lavezzi);
-		mCards.add(card);
+		for (Player player : players) {
+			Card card = new Card(this);
+			card.setText(player.getName());
+			card.setFootnote(player.getCountry());
+			card.setImageLayout(Card.ImageLayout.LEFT);
+			card.addImage(player.getImageId());
+			mCards.add(card);
+		}
 	}
 
 	private class SelectDbScrollAdapter extends CardScrollAdapter {
@@ -125,6 +114,43 @@ public class SelectDbActivity extends Activity {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			return mCards.get(position).toView();
+		}
+	}
+
+	private class Player {
+		private String name;
+		private String country;
+		private int imageId;
+
+		public Player(String name, String country, int imageId) {
+			super();
+			this.name = name;
+			this.country = country;
+			this.imageId = imageId;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getCountry() {
+			return country;
+		}
+
+		public void setCountry(String country) {
+			this.country = country;
+		}
+
+		public int getImageId() {
+			return imageId;
+		}
+
+		public void setImageId(int imageId) {
+			this.imageId = imageId;
 		}
 
 	}
