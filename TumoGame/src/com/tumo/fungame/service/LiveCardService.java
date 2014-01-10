@@ -1,8 +1,5 @@
 package com.tumo.fungame.service;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -19,6 +16,8 @@ import com.google.android.glass.timeline.TimelineManager;
 import com.tumo.fungame.R;
 import com.tumo.fungame.activity.LiveCardMenuActivity;
 import com.tumo.fungame.activity.SelectDbActivity;
+import com.tumo.fungame.model.Nick;
+import com.tumo.fungame.model.Person;
 
 public class LiveCardService extends Service {
 
@@ -41,7 +40,12 @@ public class LiveCardService extends Service {
 	private String name;
 	private Uri imageUri;
 
+	private Person person;
+
 	private void publishCard(Context context) {
+
+		person = new Person();
+
 		if (mLiveCard == null) {
 			TimelineManager tm = TimelineManager.from(context);
 			mLiveCard = tm.createLiveCard(LIVE_CARD_TAG);
@@ -72,18 +76,17 @@ public class LiveCardService extends Service {
 		}
 	}
 
-	public void updateCard(Context context) {
+	public void updateCard(Context context, Nick nick) {
 		if (mLiveCard == null) {
 			publishCard(this);
 		} else {
 			RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
 					R.layout.game_card);
 
-			Calendar calendar = Calendar.getInstance();
-			Date date = calendar.getTime();
-
+			person.getNicks().add(nick);
 			remoteViews.setCharSequence(R.id.livecard_content, "setText",
-					date.toString());
+					person.nicksToString());
+			remoteViews.setImageViewUri(R.id.livecard_image, imageUri);
 			mLiveCard.setViews(remoteViews);
 
 			/*

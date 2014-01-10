@@ -77,6 +77,14 @@ public class Person implements Serializable {
 	public void setNicks(List<Nick> nicks) {
 		this.nicks = nicks;
 	}
+	
+	public String nicksToString() {
+		String ans = "";
+		for (Nick nick : nicks) {
+			ans += nick.toString() + "\n";
+		}
+		return ans;
+	}
 
 	private static class Gender {
 		public static final int MAN = 1;
