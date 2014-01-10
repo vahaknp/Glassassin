@@ -1,6 +1,5 @@
 package com.test.mylucky;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,11 +14,7 @@ import android.speech.RecognizerIntent;
 import android.provider.MediaStore;
 import com.google.android.glass.media.CameraManager;
 import com.google.android.glass.app.Card;
-
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.widget.Toast;
-import android.hardware.Camera;
 
 public class MyActivity extends Activity {
 
@@ -27,9 +22,6 @@ public class MyActivity extends Activity {
 	private static final int SPEECH_REQUEST = 0;
 	private int iterator_for_name = 0;
 	private Handler customHandler = new Handler();
-	private SurfaceView surfaceView;
-	private SurfaceHolder surfaceHolder;
-	private boolean previewing = false;
 
 	
 	@Override
@@ -37,20 +29,7 @@ public class MyActivity extends Activity {
 			
 		super.onCreate(savedInstanceState);
 		
-		Camera camera = Camera.open();
-		if(!previewing){
-			if (camera != null){
-		      try {
-		       camera.setPreviewDisplay(surfaceHolder);
-		       camera.startPreview();
-		       previewing = true;
-		      } catch (IOException e) {
-		       // Auto-generated catch block
-		       e.printStackTrace();
-		      }
-		    }
-		}
-//		displaySpeechRecognizer();        
+		displaySpeechRecognizer();        
 //		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);		    
 //		startActivityForResult(intent, TAKE_PICTURE_REQUEST);	 
 		
@@ -70,25 +49,25 @@ public class MyActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		
-//		if (requestCode == SPEECH_REQUEST && resultCode == RESULT_OK) {
-//			ArrayList<String> voiceResults = getIntent().getExtras().getStringArrayList(RecognizerIntent.EXTRA_RESULTS);
-//			String spokenText = voiceResults.get(0);
-//	        
-//	        if(spokenText.equals("new")) {
-//	        	displaySpeechRecognizer();
-//	        } else if (spokenText.equals("ok")) {
-//	        	Card card = new Card(this);
-//		        card.setText(spokenText);
-//		        card.setFootnote("Accepted");
-//		        setContentView(card.toView());
-//	        } else {
-//	        	Card card = new Card(this);
-//	            card.setText(spokenText);
-//	            card.setFootnote("Retry or accept ");
-//	            setContentView(card.toView());
-//	            customHandler.postDelayed(recognize, 5000);
-//	        }				        
-//	    }
+		if (requestCode == SPEECH_REQUEST && resultCode == RESULT_OK) {
+			ArrayList<String> voiceResults = getIntent().getExtras().getStringArrayList(RecognizerIntent.EXTRA_RESULTS);
+			String spokenText = voiceResults.get(0);
+	        
+	        if(spokenText.equals("new")) {
+	        	displaySpeechRecognizer();
+	        } else if (spokenText.equals("ok")) {
+	        	Card card = new Card(this);
+		        card.setText(spokenText);
+		        card.setFootnote("Accepted");
+		        setContentView(card.toView());
+	        } else {
+	        	Card card = new Card(this);
+	            card.setText(spokenText);
+	            card.setFootnote("Retry or accept ");
+	            setContentView(card.toView());
+	            customHandler.postDelayed(recognize, 5000);
+	        }				        
+	    }
 		
 //		if (requestCode == TAKE_PICTURE_REQUEST && resultCode == RESULT_OK) {			
 //			
