@@ -1,6 +1,7 @@
 package com.tumo.fungame.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Person implements Serializable {
@@ -16,7 +17,7 @@ public class Person implements Serializable {
 	private int gender;
 	private String picture;
 
-	private List<Nick> nicks;
+	private List<Nick> nicks = new ArrayList<Nick>();
 
 	public Person() {
 	}
@@ -77,7 +78,7 @@ public class Person implements Serializable {
 	public void setNicks(List<Nick> nicks) {
 		this.nicks = nicks;
 	}
-	
+
 	public String nicksToString() {
 		String ans = "";
 		for (Nick nick : nicks) {

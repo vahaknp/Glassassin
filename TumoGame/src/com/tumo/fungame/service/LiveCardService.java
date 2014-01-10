@@ -9,7 +9,6 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import com.google.android.glass.timeline.LiveCard;
 import com.google.android.glass.timeline.TimelineManager;
@@ -107,7 +106,6 @@ public class LiveCardService extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		Toast.makeText(this, "Service_start", Toast.LENGTH_SHORT).show();
 		Bundle bundle = intent.getExtras();
 		name = bundle.getString(SelectDbActivity.KEY_NAME);
 		imageUri = bundle.getParcelable(SelectDbActivity.KEY_IMAGE);
@@ -117,7 +115,6 @@ public class LiveCardService extends Service {
 
 	@Override
 	public void onDestroy() {
-		Toast.makeText(this, "Service_stop", Toast.LENGTH_SHORT).show();
 		if (mLiveCard != null && mLiveCard.isPublished()) {
 			unpublishCard(this);
 		}

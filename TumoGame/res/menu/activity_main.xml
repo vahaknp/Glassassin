@@ -6,6 +6,10 @@
         android:icon="@drawable/ic_play_50"
         android:title="@string/menu_item_play"/>
     <item
+        android:id="@+id/menu_main_restart"
+        android:icon="@drawable/ic_sync_50"
+        android:title="@string/menu_item_restart"/>
+    <item
         android:id="@+id/menu_main_manage_db"
         android:icon="@drawable/ic_gear_50"
         android:title="@string/menu_item_manage_db"/>

@@ -74,7 +74,7 @@ public class SelectDbActivity extends Activity {
 
 	private void createCards() {
 		List<Player> players = new ArrayList<SelectDbActivity.Player>();
-		players.add(new Player("Messi", "Argentina", R.drawable.messi_2));
+		players.add(new Player("Messi", "Argentina", R.drawable.messi_1));
 		players.add(new Player("Neymar", "Brazil", R.drawable.neymar));
 		players.add(new Player("Lavezzi", "Argentina", R.drawable.lavezzi));
 		mCards = new ArrayList<Card>();
