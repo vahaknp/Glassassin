@@ -1,7 +1,5 @@
 package com.tumo.fungame.activity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import android.app.Activity;
@@ -17,14 +15,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.tumo.fungame.R;
-import com.tumo.fungame.model.Nick;
 import com.tumo.fungame.service.LiveCardService;
 
 public class LiveCardMenuActivity extends Activity {
-
-	private List<Nick> hardcodedNicks = new ArrayList<Nick>(Arrays.asList(
-			new Nick("my", 1, "red"), new Nick("my", 2, "green"), new Nick("my", 3, "red hat"),
-			new Nick("my", 4, "don't care")));
 
 	private static final int SPEECH_REQUEST = 0;
 
@@ -96,6 +89,10 @@ public class LiveCardMenuActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.activity_live_card, menu);
+		MenuItem itemGuessAdj = menu.findItem(R.id.menu_card_guess_adj);
+		MenuItem itemGuessPerson = menu.findItem(R.id.menu_card_guess_person);
+		itemGuessAdj.setVisible(!LiveCardService.isPersonGuessed);
+		itemGuessPerson.setVisible(!LiveCardService.isPersonGuessed);
 		return true;
 	}
 
@@ -128,11 +125,6 @@ public class LiveCardMenuActivity extends Activity {
 		startActivityForResult(intent, SPEECH_REQUEST);
 	}
 
-	private boolean isInDB(Nick adj) {
-		// TODO
-		return true;
-	}
-
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == SPEECH_REQUEST && resultCode == RESULT_OK) {
@@ -140,9 +132,7 @@ public class LiveCardMenuActivity extends Activity {
 					.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 			String spokenText = results.get(0);
 
-			if (isInDB(new Nick("my", 5, spokenText))) {
-				mService.updateCard(this, new Nick("my", 5, spokenText));
-			}
+			mService.updateCard(this, spokenText);
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 		finish();

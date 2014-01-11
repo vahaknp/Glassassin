@@ -15,6 +15,8 @@ import com.tumo.fungame.service.LiveCardService;
 
 public class MainActivity extends Activity {
 
+	private boolean shouldMenuClose = true;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,6 +56,7 @@ public class MainActivity extends Activity {
 		case R.id.menu_main_manage_db:
 			Intent intentManage = new Intent(this, ManageDbActivity.class);
 			startActivity(intentManage);
+			shouldMenuClose = false;
 			return true;
 
 		default:
@@ -64,7 +67,9 @@ public class MainActivity extends Activity {
 	@Override
 	public void onOptionsMenuClosed(Menu menu) {
 		super.onOptionsMenuClosed(menu);
-		finish();
+		if (shouldMenuClose) {
+			finish();
+		}
 	}
 
 	private boolean isLiveCardServiceRunning() {

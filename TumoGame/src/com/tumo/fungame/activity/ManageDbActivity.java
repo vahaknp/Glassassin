@@ -34,13 +34,23 @@ public class ManageDbActivity extends Activity {
 		
 		Nick nick2 = new Nick();
 		nick2.setDbName("my");
-		nick2.setName("green");
+		nick2.setName("fast");
 		nicks.add(nick2);
 		
 		Nick nick3 = new Nick();
 		nick3.setDbName("my");
-		nick3.setName("fast");
+		nick3.setName("barcelona");
 		nicks.add(nick3);
+		
+		Nick nick4 = new Nick();
+		nick4.setDbName("my");
+		nick4.setName("small");
+		nicks.add(nick4);
+		
+		Nick nick5 = new Nick();
+		nick5.setDbName("my");
+		nick5.setName("best player");
+		nicks.add(nick5);
 		
 		person.setNicks(nicks);
 

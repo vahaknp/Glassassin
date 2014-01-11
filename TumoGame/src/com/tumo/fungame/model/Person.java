@@ -35,6 +35,7 @@ public class Person implements Serializable {
 		this.gender = gender;
 		this.picture = picture;
 		this.location = location;
+		nicks = new ArrayList<Nick>();
 	}
 
 	public String getDbName() {
