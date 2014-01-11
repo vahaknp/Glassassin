@@ -102,7 +102,7 @@ public class MyActivity extends Activity {
 	        card.setImageLayout(Card.ImageLayout.FULL);
 	        card.addImage(Uri.fromFile(new File(picturePath)));
 	        setContentView(card.toView());
-	        Toast.makeText(getApplicationContext(), "Swipe back ro proceed or/nswipe forward to take new picture?", Toast.LENGTH_LONG).show();
+	        Toast.makeText(getApplicationContext(), "Swipe backwards ro proceed or\nswipe forward to take new picture?", Toast.LENGTH_LONG).show();
 	        mGestureDetector = createGestureDetector(this);        
 	    }
 
