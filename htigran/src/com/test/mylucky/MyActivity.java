@@ -1,5 +1,6 @@
 package com.test.mylucky;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.StringTokenizer;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
@@ -53,8 +55,8 @@ public class MyActivity extends Activity {
 	
 	private Runnable takePicture = new Runnable() {
 		public void run() {
-			Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-			startActivityForResult(intent, SPEECH_REQUEST);
+			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);		    
+			startActivityForResult(intent, TAKE_PICTURE_REQUEST);
 		}
 	};
 	
@@ -83,12 +85,10 @@ public class MyActivity extends Activity {
 		
 		if (requestCode == TAKE_PICTURE_REQUEST && resultCode == RESULT_OK) {			
 			
-			String picturePath = data.getStringExtra(CameraManager.EXTRA_PICTURE_FILE_PATH);
-		    Toast.makeText(getApplicationContext(), picturePath, Toast.LENGTH_SHORT).show();		    
-		    Card card = new Card(this);
-		    card.setText(picturePath);
-	        card.setImageLayout(Card.ImageLayout.LEFT);
-//	      	card.addImage(picturePath);
+			String picturePath = data.getStringExtra(CameraManager.EXTRA_THUMBNAIL_FILE_PATH);			
+		    Card card = new Card(this);		    
+	        card.setImageLayout(Card.ImageLayout.FULL);
+	        card.addImage(Uri.fromFile(new File(picturePath)));
 	        setContentView(card.toView());	        
 	    }
 
