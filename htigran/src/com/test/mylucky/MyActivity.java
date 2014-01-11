@@ -1,12 +1,7 @@
 package com.test.mylucky;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,15 +11,12 @@ import android.speech.RecognizerIntent;
 import android.provider.MediaStore;
 import com.google.android.glass.media.CameraManager;
 import com.google.android.glass.app.Card;
-
-import android.view.View;
 import android.widget.Toast;
 
 public class MyActivity extends Activity {
 
 	private static final int TAKE_PICTURE_REQUEST = 1;
-	private static final int SPEECH_REQUEST = 0;
-	private int iterator_for_name = 0;
+	private static final int SPEECH_REQUEST = 0;	
 	private Handler customHandler = new Handler();
 	private String picturePath;
 
@@ -34,10 +26,7 @@ public class MyActivity extends Activity {
 			
 		super.onCreate(savedInstanceState);	
 		Toast.makeText(getApplicationContext(), "The picture will be captured in 3 seconds.", Toast.LENGTH_SHORT).show();
-		customHandler.postDelayed(takePicture, 3000);
-		
-//		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);		    
-//		startActivityForResult(intent, TAKE_PICTURE_REQUEST);	 
+		customHandler.postDelayed(takePicture, 3000); 
 		
 	}
 	
