@@ -53,35 +53,34 @@ public class MyActivity extends Activity {
 		}
 	};
 	
+	private void takePicture() {
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);		    
+		startActivityForResult(intent, TAKE_PICTURE_REQUEST);
+	}
+	
 	private Runnable takePicture = new Runnable() {
 		public void run() {
-			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);		    
-			startActivityForResult(intent, TAKE_PICTURE_REQUEST);
+			takePicture();
 		}
 	};
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		
-//		if (requestCode == SPEECH_REQUEST && resultCode == RESULT_OK) {
-//			ArrayList<String> voiceResults = getIntent().getExtras().getStringArrayList(RecognizerIntent.EXTRA_RESULTS);
-//			String spokenText = voiceResults.get(0);
-//	        
-//	        if(spokenText.equals("new")) {
-//	        	displaySpeechRecognizer();
-//	        } else if (spokenText.equals("ok")) {
-//	        	Card card = new Card(this);
-//		        card.setText(spokenText);
-//		        card.setFootnote("Accepted");
-//		        setContentView(card.toView());
-//	        } else {
-//	        	Card card = new Card(this);
-//	            card.setText(spokenText);
-//	            card.setFootnote("Retry or accept ");
-//	            setContentView(card.toView());
-//	            customHandler.postDelayed(recognize, 5000);
-//	        }				        
-//	    }
+		if (requestCode == SPEECH_REQUEST && resultCode == RESULT_OK) {
+			ArrayList<String> voiceResults = getIntent().getExtras().getStringArrayList(RecognizerIntent.EXTRA_RESULTS);
+			String spokenText = voiceResults.get(0);
+	        
+	        if(spokenText.equals("new")) {
+	        	Card card = new Card(this);
+	            card.setText("The photo will be captured after 3 seconds");        
+	            setContentView(card.toView());
+	    		customHandler.postDelayed(takePicture, 3000);
+	        } else if (spokenText.equals("ok")) {
+	        	Intent menuIntent = new Intent(this, CardActivity.class);	        	
+	        	startActivity(menuIntent);
+	        }				        
+	    }
 		
 		if (requestCode == TAKE_PICTURE_REQUEST && resultCode == RESULT_OK) {			
 			
@@ -89,7 +88,9 @@ public class MyActivity extends Activity {
 		    Card card = new Card(this);		    
 	        card.setImageLayout(Card.ImageLayout.FULL);
 	        card.addImage(Uri.fromFile(new File(picturePath)));
-	        setContentView(card.toView());	        
+	        setContentView(card.toView());
+	        Toast.makeText(getApplicationContext(), "Say new or retry", Toast.LENGTH_SHORT).show();
+	        customHandler.postDelayed(recognize, 3000);
 	    }
 
 	    super.onActivityResult(requestCode, resultCode, data);

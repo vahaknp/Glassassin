@@ -18,7 +18,7 @@ public class CardActivity extends Activity {
 //				.getStringArrayList(RecognizerIntent.EXTRA_RESULTS);
 
 		Card card = new Card(this);
-		card.setText("Hi Tumo");
+		card.setText("You gues a person");
 //		card.setText(voiceResults.get(0));
 		card.setFootnote("glass workshop");
 
