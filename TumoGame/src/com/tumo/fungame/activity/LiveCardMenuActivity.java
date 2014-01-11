@@ -23,8 +23,8 @@ import com.tumo.fungame.service.LiveCardService;
 public class LiveCardMenuActivity extends Activity {
 
 	private List<Nick> hardcodedNicks = new ArrayList<Nick>(Arrays.asList(
-			new Nick(1, "red"), new Nick(2, "green"), new Nick(3, "red hat"),
-			new Nick(4, "don't care")));
+			new Nick("my", 1, "red"), new Nick("my", 2, "green"), new Nick("my", 3, "red hat"),
+			new Nick("my", 4, "don't care")));
 
 	private static final int SPEECH_REQUEST = 0;
 
@@ -140,8 +140,8 @@ public class LiveCardMenuActivity extends Activity {
 					.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 			String spokenText = results.get(0);
 
-			if (isInDB(new Nick(5, spokenText))) {
-				mService.updateCard(this, new Nick(5, spokenText));
+			if (isInDB(new Nick("my", 5, spokenText))) {
+				mService.updateCard(this, new Nick("my", 5, spokenText));
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);

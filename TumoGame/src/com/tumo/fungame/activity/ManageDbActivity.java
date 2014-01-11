@@ -1,5 +1,8 @@
 package com.tumo.fungame.activity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,12 +10,41 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.tumo.fungame.R;
+import com.tumo.fungame.dao.PersonDao;
+import com.tumo.fungame.model.Nick;
+import com.tumo.fungame.model.Person;
 
 public class ManageDbActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		Person person = new Person();
+		person.setDbName("my");
+		person.setGender(Person.Gender.MAN);
+		person.setPicture("path/external/pic.jpg");
+		person.setLocation("Tumo centre");
+		
+		List<Nick> nicks = new ArrayList<Nick>();
+		Nick nick1 = new Nick();
+		nick1.setDbName("my");
+		nick1.setName("long hair");
+		nicks.add(nick1);
+		
+		Nick nick2 = new Nick();
+		nick2.setDbName("my");
+		nick2.setName("green");
+		nicks.add(nick2);
+		
+		Nick nick3 = new Nick();
+		nick3.setDbName("my");
+		nick3.setName("fast");
+		nicks.add(nick3);
+		
+		person.setNicks(nicks);
+
+		PersonDao.add(person);
 	}
 
 	@Override

@@ -15,7 +15,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import com.google.android.glass.app.Card;
 import com.google.android.glass.widget.CardScrollAdapter;
 import com.google.android.glass.widget.CardScrollView;
-import com.tumo.fungame.R;
+import com.tumo.fungame.dao.PersonDao;
 import com.tumo.fungame.service.LiveCardService;
 
 public class SelectDbActivity extends Activity {
@@ -73,18 +73,13 @@ public class SelectDbActivity extends Activity {
 	};
 
 	private void createCards() {
-		List<Player> players = new ArrayList<SelectDbActivity.Player>();
-		players.add(new Player("Messi", "Argentina", R.drawable.messi_1));
-		players.add(new Player("Neymar", "Brazil", R.drawable.neymar));
-		players.add(new Player("Lavezzi", "Argentina", R.drawable.lavezzi));
+		List<String> dbs = PersonDao.getDbNames();
+		dbs.add(0, PersonDao.DB_ALL);
 		mCards = new ArrayList<Card>();
 
-		for (Player player : players) {
+		for (String string : dbs) {
 			Card card = new Card(this);
-			card.setText(player.getName());
-			card.setFootnote(player.getCountry());
-			card.setImageLayout(Card.ImageLayout.LEFT);
-			card.addImage(player.getImageId());
+			card.setText(string);
 			mCards.add(card);
 		}
 	}
