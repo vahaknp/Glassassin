@@ -95,23 +95,6 @@ public class MyActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		
-//		if (requestCode == SPEECH_REQUEST && resultCode == RESULT_OK) {			
-//			List<String> results = data
-//					.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-//			String spokenText = results.get(0);
-//	        
-//	        if(spokenText.equals("yes") || spokenText.equals("Yes")) {
-//	        	Toast.makeText(getApplicationContext(), "The picture will be captured in 3 seconds.", Toast.LENGTH_SHORT).show();
-//	    		customHandler.postDelayed(takePicture, 3000);
-//	        } else if (spokenText.equals("No") || spokenText.equals("no")) {
-//	        	Intent pictureAccept = new Intent(this, CardActivity.class);
-//	        	pictureAccept.putExtra("picturePath",picturePath);
-//	        	startActivity(pictureAccept);
-//	        } else {
-//	        	displaySpeechRecognizer();
-//	        }			        
-//	    }
-		
 		if (requestCode == TAKE_PICTURE_REQUEST && resultCode == RESULT_OK) {			
 			
 			picturePath = data.getStringExtra(CameraManager.EXTRA_THUMBNAIL_FILE_PATH);			
@@ -119,7 +102,7 @@ public class MyActivity extends Activity {
 	        card.setImageLayout(Card.ImageLayout.FULL);
 	        card.addImage(Uri.fromFile(new File(picturePath)));
 	        setContentView(card.toView());
-	        Toast.makeText(getApplicationContext(), "Swipe back ro proceed or/nswipe forward to take new picture?", Toast.LENGTH_SHORT).show();
+	        Toast.makeText(getApplicationContext(), "Swipe back ro proceed or/nswipe forward to take new picture?", Toast.LENGTH_LONG).show();
 	        mGestureDetector = createGestureDetector(this);        
 	    }
 
