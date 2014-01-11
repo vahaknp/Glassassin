@@ -23,7 +23,7 @@ public class CardActivity extends Activity {
         card.setImageLayout(Card.ImageLayout.LEFT);
         card.addImage(Uri.fromFile(new File(picturePath)));
         setContentView(card.toView());
-        Toast.makeText(getApplicationContext(), "Did you guess a person", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Did you guess a person?", Toast.LENGTH_SHORT).show();
 		
 	}
 	

@@ -54,8 +54,7 @@ public class MyActivity extends Activity {
                 	customHandler.postDelayed(takePicture, 3000); 
                     return true;
                 } else if (gesture == Gesture.SWIPE_LEFT) {                	
-                	// do something on left (backwards) swipe
-                	Toast.makeText(getApplicationContext(), "You guess a person", Toast.LENGTH_SHORT).show();
+                	// do something on left (backwards) swipe                	
                 	changeActivity();	                    
                     return true;
                 }
@@ -121,8 +120,7 @@ public class MyActivity extends Activity {
 	        card.addImage(Uri.fromFile(new File(picturePath)));
 	        setContentView(card.toView());
 	        Toast.makeText(getApplicationContext(), "Swipe back ro proceed or/nswipe forward to take new picture?", Toast.LENGTH_SHORT).show();
-	        mGestureDetector = createGestureDetector(this);
-//	        customHandler.postDelayed(recognize, 3000);
+	        mGestureDetector = createGestureDetector(this);        
 	    }
 
 	    super.onActivityResult(requestCode, resultCode, data);
