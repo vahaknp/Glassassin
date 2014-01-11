@@ -32,9 +32,7 @@ public class MyActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 			
 		super.onCreate(savedInstanceState);	
-		Card card = new Card(this);
-        card.setText("The photo will be captured after 3 seconds");        
-        setContentView(card.toView());
+		Toast.makeText(getApplicationContext(), "The picture will be captured in 3 seconds.", Toast.LENGTH_SHORT).show();
 		customHandler.postDelayed(takePicture, 3000);
 		
 //		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);		    
@@ -67,19 +65,20 @@ public class MyActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		
-		if (requestCode == SPEECH_REQUEST && resultCode == RESULT_OK) {
-			ArrayList<String> voiceResults = getIntent().getExtras().getStringArrayList(RecognizerIntent.EXTRA_RESULTS);
-			String spokenText = voiceResults.get(0);
+		if (requestCode == SPEECH_REQUEST && resultCode == RESULT_OK) {			
+			List<String> results = data
+					.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+			String spokenText = results.get(0);
 	        
-	        if(spokenText.equals("new")) {
-	        	Card card = new Card(this);
-	            card.setText("The photo will be captured after 3 seconds");        
-	            setContentView(card.toView());
+	        if(spokenText.equals("yes")) {
+	        	Toast.makeText(getApplicationContext(), "The picture will be captured in 3 seconds.", Toast.LENGTH_SHORT).show();
 	    		customHandler.postDelayed(takePicture, 3000);
-	        } else if (spokenText.equals("ok")) {
+	        } else if (spokenText.equals("no")) {
 	        	Intent menuIntent = new Intent(this, CardActivity.class);	        	
 	        	startActivity(menuIntent);
-	        }				        
+	        } else {
+	        	displaySpeechRecognizer();
+	        }			        
 	    }
 		
 		if (requestCode == TAKE_PICTURE_REQUEST && resultCode == RESULT_OK) {			
@@ -89,7 +88,7 @@ public class MyActivity extends Activity {
 	        card.setImageLayout(Card.ImageLayout.FULL);
 	        card.addImage(Uri.fromFile(new File(picturePath)));
 	        setContentView(card.toView());
-	        Toast.makeText(getApplicationContext(), "Say new or retry", Toast.LENGTH_SHORT).show();
+	        Toast.makeText(getApplicationContext(), "Do yo want to take new picture?", Toast.LENGTH_SHORT).show();
 	        customHandler.postDelayed(recognize, 3000);
 	    }
 
