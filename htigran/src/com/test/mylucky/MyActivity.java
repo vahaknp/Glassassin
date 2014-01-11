@@ -50,14 +50,13 @@ public class MyActivity extends Activity {
 			public boolean onGesture(Gesture gesture) {
                 if (gesture == Gesture.SWIPE_RIGHT) {
                 	// do something on right (forward) swipe
+                	Toast.makeText(getApplicationContext(), "The picture will be captured in 3 seconds.", Toast.LENGTH_SHORT).show();
                 	customHandler.postDelayed(takePicture, 3000); 
                     return true;
-                } else if (gesture == Gesture.SWIPE_LEFT) {
-                	Toast.makeText(getApplicationContext(), "You guess a person", Toast.LENGTH_SHORT).show();
+                } else if (gesture == Gesture.SWIPE_LEFT) {                	
                 	// do something on left (backwards) swipe
-//                	Intent pictureAccept = new Intent(this, CardActivity.class);
-//    	        	pictureAccept.putExtra("picturePath",picturePath);
-//    	        	startActivity(pictureAccept);	                    
+                	Toast.makeText(getApplicationContext(), "You guess a person", Toast.LENGTH_SHORT).show();
+                	changeActivity();	                    
                     return true;
                 }
                 return false;
@@ -69,6 +68,12 @@ public class MyActivity extends Activity {
 	private void displaySpeechRecognizer() {
 		Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 		startActivityForResult(intent, SPEECH_REQUEST);
+	}
+	
+	private void changeActivity() {
+		Intent pictureAccept = new Intent(this, CardActivity.class);
+    	pictureAccept.putExtra("picturePath",picturePath);
+    	startActivity(pictureAccept);
 	}
 	
 	private Runnable recognize = new Runnable() {
