@@ -26,6 +26,7 @@ public class MyActivity extends Activity {
 	private static final int SPEECH_REQUEST = 0;
 	private int iterator_for_name = 0;
 	private Handler customHandler = new Handler();
+	private String picturePath;
 
 	
 	@Override
@@ -70,12 +71,13 @@ public class MyActivity extends Activity {
 					.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 			String spokenText = results.get(0);
 	        
-	        if(spokenText.equals("yes")) {
+	        if(spokenText.equals("yes") || spokenText.equals("Yes")) {
 	        	Toast.makeText(getApplicationContext(), "The picture will be captured in 3 seconds.", Toast.LENGTH_SHORT).show();
 	    		customHandler.postDelayed(takePicture, 3000);
-	        } else if (spokenText.equals("no")) {
-	        	Intent menuIntent = new Intent(this, CardActivity.class);	        	
-	        	startActivity(menuIntent);
+	        } else if (spokenText.equals("No") || spokenText.equals("no")) {
+	        	Intent pictureAccept = new Intent(this, CardActivity.class);
+	        	pictureAccept.putExtra("picturePath",picturePath);
+	        	startActivity(pictureAccept);
 	        } else {
 	        	displaySpeechRecognizer();
 	        }			        
@@ -83,7 +85,7 @@ public class MyActivity extends Activity {
 		
 		if (requestCode == TAKE_PICTURE_REQUEST && resultCode == RESULT_OK) {			
 			
-			String picturePath = data.getStringExtra(CameraManager.EXTRA_THUMBNAIL_FILE_PATH);			
+			picturePath = data.getStringExtra(CameraManager.EXTRA_THUMBNAIL_FILE_PATH);			
 		    Card card = new Card(this);		    
 	        card.setImageLayout(Card.ImageLayout.FULL);
 	        card.addImage(Uri.fromFile(new File(picturePath)));
