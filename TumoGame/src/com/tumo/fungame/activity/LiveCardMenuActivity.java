@@ -19,9 +19,12 @@ import com.tumo.fungame.service.LiveCardService;
 
 public class LiveCardMenuActivity extends Activity {
 
-	private static final int SPEECH_REQUEST = 0;
+	public static final String KEY_PIC_PATH = "key_pic_path";
 
-	private boolean shouldMenuClose = true;
+	private static final int SPEECH_REQUEST = 0;
+	private static final int GUESS_PERSON = 1;
+
+	private boolean shouldMenuClose;
 
 	// binding to Service
 
@@ -82,6 +85,7 @@ public class LiveCardMenuActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		shouldMenuClose = true;
 		openOptionsMenu();
 	}
 
@@ -91,8 +95,8 @@ public class LiveCardMenuActivity extends Activity {
 		inflater.inflate(R.menu.activity_live_card, menu);
 		MenuItem itemGuessAdj = menu.findItem(R.id.menu_card_guess_adj);
 		MenuItem itemGuessPerson = menu.findItem(R.id.menu_card_guess_person);
-		itemGuessAdj.setVisible(!LiveCardService.isPersonGuessed);
-		itemGuessPerson.setVisible(!LiveCardService.isPersonGuessed);
+		itemGuessAdj.setVisible(!LiveCardService.isGameOver());
+		itemGuessPerson.setVisible(!LiveCardService.isGameOver());
 		return true;
 	}
 
@@ -105,7 +109,11 @@ public class LiveCardMenuActivity extends Activity {
 			return true;
 
 		case R.id.menu_card_guess_person:
-			// TODO
+			shouldMenuClose = false;
+			Intent intent = new Intent(this, GuessPersonActivity.class);
+			intent.putExtra(KEY_PIC_PATH, mService.getPersonToGuess()
+					.getPicture());
+			startActivityForResult(intent, GUESS_PERSON);
 			return true;
 
 		case R.id.menu_card_settings:
@@ -133,6 +141,14 @@ public class LiveCardMenuActivity extends Activity {
 			String spokenText = results.get(0);
 
 			mService.updateCard(this, spokenText);
+		}
+		if (requestCode == GUESS_PERSON && resultCode == RESULT_OK) {
+			int value = data.getIntExtra("result", 0);
+			LiveCardService.setGameOver(true);
+			if (value == 1) {
+				LiveCardService.setGuessed(true);
+			}
+			mService.updateCard(this, "");
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 		finish();

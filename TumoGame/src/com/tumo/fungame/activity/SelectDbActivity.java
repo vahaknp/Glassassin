@@ -15,6 +15,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import com.google.android.glass.app.Card;
 import com.google.android.glass.widget.CardScrollAdapter;
 import com.google.android.glass.widget.CardScrollView;
+import com.tumo.fungame.R;
 import com.tumo.fungame.dao.PersonDao;
 import com.tumo.fungame.service.LiveCardService;
 
@@ -77,6 +78,8 @@ public class SelectDbActivity extends Activity {
 
 		for (String string : dbs) {
 			Card card = new Card(this);
+			card.setImageLayout(Card.ImageLayout.FULL);
+			card.addImage(R.drawable.database);
 			card.setText(string);
 			mCards.add(card);
 		}

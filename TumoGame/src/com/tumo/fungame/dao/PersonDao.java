@@ -169,7 +169,7 @@ public class PersonDao {
 	}
 
 	public static List<Person> getPersons(String dbName) throws SQLiteException {
-		if(dbName.equals(DB_ALL)) {
+		if (dbName.equals(DB_ALL)) {
 			dbName = "";
 		}
 		List<Person> persons = new ArrayList<Person>();

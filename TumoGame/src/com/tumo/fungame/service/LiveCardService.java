@@ -1,5 +1,6 @@
 package com.tumo.fungame.service;
 
+import java.io.File;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -8,10 +9,12 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import com.google.android.glass.timeline.LiveCard;
 import com.google.android.glass.timeline.TimelineManager;
@@ -32,7 +35,8 @@ public class LiveCardService extends Service {
 		}
 	}
 
-	public static boolean isPersonGuessed = false;
+	private static boolean isPersonGuessed = false;
+	private static boolean isGameOver = false;
 	private final IBinder mBinder = new LocalBinder();
 
 	// Tag used to identify the LiveCard in debugging logs.
@@ -54,7 +58,7 @@ public class LiveCardService extends Service {
 			RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
 					R.layout.game_card);
 			remoteViews.setCharSequence(R.id.livecard_content, "setText",
-					beautifyPerson(person));
+					person.beautify());
 			remoteViews.setImageViewResource(R.id.livecard_image,
 					R.drawable.question_mark);
 			mLiveCard.setViews(remoteViews);
@@ -87,23 +91,28 @@ public class LiveCardService extends Service {
 				person.getNicks().add(findNick(spokenNick));
 			}
 
-			if (isGuessed()) {
-				remoteViews.setCharSequence(R.id.livecard_content, "setText",
-						beautifyPerson(personToGuess));
+			if (isGameOver()) {
+				String text = "";
+				if (isGuessed()) {
+					text = "You win :) \n";
+				} else {
+					text = "You lose :( \n";
+				}
 
-				remoteViews.setImageViewResource(R.id.livecard_image,
-						R.drawable.messi_3);
+				remoteViews.setCharSequence(R.id.livecard_content, "setText",
+						text + personToGuess.beautify());
+
+				remoteViews.setImageViewUri(R.id.livecard_image,
+						Uri.fromFile(new File(personToGuess.getPicture())));
 			} else {
 				remoteViews.setCharSequence(R.id.livecard_content, "setText",
-						beautifyPerson(person));
+						person.beautify());
 
 				remoteViews.setImageViewResource(R.id.livecard_image,
 						R.drawable.question_mark);
 			}
 
 			mLiveCard.setViews(remoteViews);
-			
-			isPersonGuessed = isGuessed();
 		}
 	}
 
@@ -118,15 +127,24 @@ public class LiveCardService extends Service {
 		dbName = bundle.getString(SelectDbActivity.KEY_DB_NAME);
 
 		List<Person> persons = PersonDao.getPersons(dbName);
-		Random random = new Random();
-		int randomPosition = random.nextInt(persons.size());
-		personToGuess = persons.get(randomPosition);
-		person = new Person(personToGuess.getDbName(), personToGuess.getId(),
-				personToGuess.getName(), personToGuess.getSurname(),
-				personToGuess.getGender(), personToGuess.getPicture(),
-				personToGuess.getLocation());
-		isPersonGuessed = false;
-		publishCard(this);
+		if (persons.isEmpty()) {
+			Toast.makeText(this, "This database is empty", Toast.LENGTH_SHORT)
+					.show();
+			stopSelf();
+		} else {
+			Random random = new Random();
+			int randomPosition = random.nextInt(persons.size());
+			personToGuess = persons.get(randomPosition);
+			person = new Person(personToGuess.getDbName(),
+					personToGuess.getId(), personToGuess.getName(),
+					personToGuess.getSurname(), personToGuess.getGender(),
+					personToGuess.getPicture(), personToGuess.getLocation());
+			person.getNicks().add(personToGuess.getNicks().get(0));
+			person.getNicks().add(personToGuess.getNicks().get(1));
+			isPersonGuessed = false;
+			isGameOver = false;
+			publishCard(this);
+		}
 		return START_STICKY;
 	}
 
@@ -136,16 +154,6 @@ public class LiveCardService extends Service {
 			unpublishCard(this);
 		}
 		super.onDestroy();
-	}
-
-	private String beautifyPerson(Person per) {
-		String res = "ID:		  " + per.getId() + "\n" + "Gender:	  "
-				+ (per.getGender() == 1 ? "man" : "woman") + "\n"
-				+ "Location: " + per.getLocation() + "\n" + "\n";
-
-		res += per.nicksToString();
-
-		return res;
 	}
 
 	private boolean hasAlready(String string) {
@@ -176,7 +184,23 @@ public class LiveCardService extends Service {
 		return null;
 	}
 
-	public boolean isGuessed() {
-		return person.getNicks().size() >= personToGuess.getNicks().size() / 2 + 1;
+	public static boolean isGuessed() {
+		return isPersonGuessed;
+	}
+
+	public static void setGuessed(boolean t) {
+		isPersonGuessed = t;
+	}
+
+	public static boolean isGameOver() {
+		return isGameOver;
+	}
+
+	public static void setGameOver(boolean t) {
+		isGameOver = t;
+	}
+
+	public Person getPersonToGuess() {
+		return personToGuess;
 	}
 }

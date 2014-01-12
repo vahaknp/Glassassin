@@ -110,6 +110,15 @@ public class Person implements Serializable {
 		return ans;
 	}
 
+	public String beautify() {
+		String res = "Gender: " + (getGender() == 1 ? "male" : "female") + "\n"
+				+ "Location: " + getLocation() + "\n" + "\n";
+
+		res += nicksToString();
+
+		return res;
+	}
+
 	public static class Gender {
 		public static final int MAN = 1;
 		public static final int WOMAN = 2;

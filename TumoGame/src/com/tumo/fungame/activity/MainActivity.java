@@ -15,7 +15,7 @@ import com.tumo.fungame.service.LiveCardService;
 
 public class MainActivity extends Activity {
 
-	private boolean shouldMenuClose = true;
+	private boolean shouldMenuClose;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		shouldMenuClose = true;
 		openOptionsMenu();
 	}
 
