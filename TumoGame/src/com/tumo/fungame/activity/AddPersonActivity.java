@@ -106,6 +106,9 @@ public class AddPersonActivity extends Activity {
 		itemAdj.setVisible(!TextUtils.isEmpty(person.getPicture()));
 		itemDone.setVisible(!TextUtils.isEmpty(person.getPicture())
 				&& person.getNicks().size() >= 4);
+
+		// limit for adjectives count
+		itemAdj.setEnabled(person.getNicks().size() <= 12);
 		return true;
 	}
 
@@ -224,7 +227,7 @@ public class AddPersonActivity extends Activity {
 		Card card = new Card(AddPersonActivity.this);
 		card.setImageLayout(Card.ImageLayout.LEFT);
 		card.addImage(Uri.fromFile(new File(person.getPicture())));
-		card.setText(person.beautify());
+		card.setText(person.beautifyCard());
 		setContentView(card.toView());
 	}
 

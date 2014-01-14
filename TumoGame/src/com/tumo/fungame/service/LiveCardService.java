@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -57,10 +58,11 @@ public class LiveCardService extends Service {
 
 			RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
 					R.layout.game_card);
-			remoteViews.setCharSequence(R.id.livecard_content, "setText",
-					person.beautify());
-			remoteViews.setImageViewResource(R.id.livecard_image,
-					R.drawable.question_mark);
+			remoteViews.setCharSequence(R.id.livecard_content_1, "setText",
+					person.beautify().first);
+			remoteViews.setCharSequence(R.id.livecard_content_2, "setText",
+					person.beautify().second);
+			remoteViews.setViewVisibility(R.id.livecard_image, View.GONE);
 			mLiveCard.setViews(remoteViews);
 			Intent intent = new Intent(context, LiveCardMenuActivity.class);
 			mLiveCard.setAction(PendingIntent
@@ -98,18 +100,18 @@ public class LiveCardService extends Service {
 				} else {
 					text = "You lose :( \n";
 				}
+				remoteViews = new RemoteViews(context.getPackageName(),
+						R.layout.game_over);
 
-				remoteViews.setCharSequence(R.id.livecard_content, "setText",
-						text + personToGuess.beautify());
-
-				remoteViews.setImageViewUri(R.id.livecard_image,
-						Uri.fromFile(new File(personToGuess.getPicture())));
+				remoteViews.setCharSequence(R.id.game_over_content, "setText",
+						text);
 			} else {
-				remoteViews.setCharSequence(R.id.livecard_content, "setText",
-						person.beautify());
+				remoteViews.setCharSequence(R.id.livecard_content_1, "setText",
+						person.beautify().first);
+				remoteViews.setCharSequence(R.id.livecard_content_2, "setText",
+						person.beautify().second);
 
-				remoteViews.setImageViewResource(R.id.livecard_image,
-						R.drawable.question_mark);
+				remoteViews.setViewVisibility(R.id.livecard_image, View.GONE);
 			}
 
 			mLiveCard.setViews(remoteViews);

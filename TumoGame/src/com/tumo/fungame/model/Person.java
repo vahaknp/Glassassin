@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Pair;
+
 public class Person implements Serializable {
 
 	/**
@@ -110,13 +112,28 @@ public class Person implements Serializable {
 		return ans;
 	}
 
-	public String beautify() {
-		String res = "Gender: " + (getGender() == 1 ? "male" : "female") + "\n"
-				+ "Location: " + getLocation() + "\n" + "\n";
+	public Pair<String, String> beautify() {
+		String res1 = (getGender() == 1 ? "Male" : "Female") + "\n";
+		String res2 = getLocation() + "\n";
 
-		res += nicksToString();
+		for (int i = 0; i < nicks.size(); i++) {
+			if (i % 2 == 0)
+				res1 += nicks.get(i).toString() + "\n";
+			else
+				res2 += nicks.get(i).toString() + "\n";
+		}
 
-		return res;
+		return new Pair<String, String>(res1, res2);
+	}
+
+	public String beautifyCard() {
+		String res1 = (getGender() == 1 ? "Male" : "Female") + "\n"
+				+ getLocation() + "\n";
+
+		for (int i = 0; i < nicks.size(); i++) {
+			res1 += nicks.get(i).toString() + "\n";
+		}
+		return res1;
 	}
 
 	public static class Gender {

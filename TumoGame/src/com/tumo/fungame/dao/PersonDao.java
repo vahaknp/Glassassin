@@ -25,7 +25,7 @@ public class PersonDao {
 
 	// Db names
 	public static final String DB_ALL = "All";
-	public static final String DB_MY = "My";
+	public static final String DB_MY = "Local";
 
 	public static void add(Person person) {
 		long personId = insert(person);

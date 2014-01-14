@@ -114,7 +114,7 @@ public class ViewAllActivity extends Activity {
 			Card card = new Card(this);
 			card.setImageLayout(Card.ImageLayout.LEFT);
 			card.addImage(Uri.fromFile(new File(person.getPicture())));
-			card.setText(person.beautify());
+			card.setText(person.beautifyCard());
 			mCards.add(card);
 		}
 	}
