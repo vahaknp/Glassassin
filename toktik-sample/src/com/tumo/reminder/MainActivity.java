@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
         
         // start reminder service
         Intent serviceIntent = new Intent();
-        serviceIntent.setAction("com.tumo.reminder.ReminderService");
+        serviceIntent.setAction("com.test.mylucky.ReminderService");
         serviceIntent.putExtra("time", voiceResults.get(0).toLowerCase());
         startService(serviceIntent);
 	}

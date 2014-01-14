@@ -7,7 +7,7 @@
     <TextView
         android:id="@+id/livecard_content"
         style="@style/myLiveCardStyle"
-        android:text="@string/livecard_content"/>
+        android:text="@string/livecard_starting_content"/>
 
 </FrameLayout>
 

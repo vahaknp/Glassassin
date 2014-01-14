@@ -1,5 +1,6 @@
 package com.test.mylucky;
 
+import com.google.android.glass.sample.stopwatch.R;
 import com.google.android.glass.timeline.LiveCard;
 import com.google.android.glass.timeline.TimelineManager;
 

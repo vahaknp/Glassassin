@@ -3,7 +3,7 @@
 
     <string name="app_name">ReminderDemo</string>
     <string name="voice_command">Reminder Demo</string>
-    <string name="reminder_time_prompt">In how much time?</string>
-    <string name="reminder_subject_prompt">About what?</string>
+    <string name="glass_voice_prompt">Say: In ___ seconds, about ___ .</string>
+    <string name="livecard_starting_content">Reminder Live Card Created</string>
 
 </resources>
