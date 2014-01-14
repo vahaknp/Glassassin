@@ -1,64 +1,78 @@
 package com.test.mylucky;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.File;
 import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
-
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.provider.MediaStore;
 import com.google.android.glass.media.CameraManager;
+import com.google.android.glass.touchpad.Gesture;
+import com.google.android.glass.touchpad.GestureDetector;
 import com.google.android.glass.app.Card;
-
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
+import android.view.MotionEvent;
 import android.widget.Toast;
-import android.hardware.Camera;
 
 public class MyActivity extends Activity {
 
 	private static final int TAKE_PICTURE_REQUEST = 1;
-	private static final int SPEECH_REQUEST = 0;
-	private int iterator_for_name = 0;
+	private static final int SPEECH_REQUEST = 0;	
 	private Handler customHandler = new Handler();
-	private SurfaceView surfaceView;
-	private SurfaceHolder surfaceHolder;
-	private boolean previewing = false;
+	private String picturePath;
+	private GestureDetector mGestureDetector;
 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 			
-		super.onCreate(savedInstanceState);
-		
-		Camera camera = Camera.open();
-		if(!previewing){
-			if (camera != null){
-		      try {
-		       camera.setPreviewDisplay(surfaceHolder);
-		       camera.startPreview();
-		       previewing = true;
-		      } catch (IOException e) {
-		       // Auto-generated catch block
-		       e.printStackTrace();
-		      }
-		    }
+		super.onCreate(savedInstanceState);	
+		Toast.makeText(getApplicationContext(), "The picture will be captured in 3 seconds.", Toast.LENGTH_SHORT).show();		
+		customHandler.postDelayed(takePicture, 3000);		
+	}
+	
+	@Override
+	public boolean onGenericMotionEvent(MotionEvent event) {
+		if (mGestureDetector != null) {
+			return mGestureDetector.onMotionEvent(event);
 		}
-//		displaySpeechRecognizer();        
-//		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);		    
-//		startActivityForResult(intent, TAKE_PICTURE_REQUEST);	 
-		
+		return false;
+	}
+
+	private GestureDetector createGestureDetector(Context context) {
+		GestureDetector gestureDetector = new GestureDetector(context);
+		gestureDetector.setBaseListener(new GestureDetector.BaseListener() {
+
+			@Override
+			public boolean onGesture(Gesture gesture) {
+                if (gesture == Gesture.SWIPE_RIGHT) {
+                	// do something on right (forward) swipe
+                	Toast.makeText(getApplicationContext(), "The picture will be captured in 3 seconds.", Toast.LENGTH_SHORT).show();
+                	customHandler.postDelayed(takePicture, 3000); 
+                    return true;
+                } else if (gesture == Gesture.SWIPE_LEFT) {                	
+                	// do something on left (backwards) swipe                	
+                	changeActivity();	                    
+                    return true;
+                }
+                return false;
+            }
+		});
+		return gestureDetector;
 	}
 	
 	private void displaySpeechRecognizer() {
 		Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 		startActivityForResult(intent, SPEECH_REQUEST);
+	}
+	
+	private void changeActivity() {
+		Intent pictureAccept = new Intent(this, CardActivity.class);
+    	pictureAccept.putExtra("picturePath",picturePath);
+    	startActivity(pictureAccept);
 	}
 	
 	private Runnable recognize = new Runnable() {
@@ -67,39 +81,30 @@ public class MyActivity extends Activity {
 		}
 	};
 	
+	private void takePicture() {
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);		    
+		startActivityForResult(intent, TAKE_PICTURE_REQUEST);
+	}
+	
+	private Runnable takePicture = new Runnable() {
+		public void run() {
+			takePicture();
+		}
+	};
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		
-//		if (requestCode == SPEECH_REQUEST && resultCode == RESULT_OK) {
-//			ArrayList<String> voiceResults = getIntent().getExtras().getStringArrayList(RecognizerIntent.EXTRA_RESULTS);
-//			String spokenText = voiceResults.get(0);
-//	        
-//	        if(spokenText.equals("new")) {
-//	        	displaySpeechRecognizer();
-//	        } else if (spokenText.equals("ok")) {
-//	        	Card card = new Card(this);
-//		        card.setText(spokenText);
-//		        card.setFootnote("Accepted");
-//		        setContentView(card.toView());
-//	        } else {
-//	        	Card card = new Card(this);
-//	            card.setText(spokenText);
-//	            card.setFootnote("Retry or accept ");
-//	            setContentView(card.toView());
-//	            customHandler.postDelayed(recognize, 5000);
-//	        }				        
-//	    }
-		
-//		if (requestCode == TAKE_PICTURE_REQUEST && resultCode == RESULT_OK) {			
-//			
-//			String picturePath = data.getStringExtra(CameraManager.EXTRA_PICTURE_FILE_PATH);
-//		    Toast.makeText(getApplicationContext(), picturePath, Toast.LENGTH_SHORT).show();		    
-//		    Card card = new Card(this);
-//	        card.setText(picturePath); 
-//	        card.setImageLayout(Card.ImageLayout.LEFT);
-//	      	card.addImage(R.drawable.picturePath);
-//	        setContentView(card.toView());	        
-//	    }
+		if (requestCode == TAKE_PICTURE_REQUEST && resultCode == RESULT_OK) {			
+			
+			picturePath = data.getStringExtra(CameraManager.EXTRA_THUMBNAIL_FILE_PATH);			
+		    Card card = new Card(this);		    
+	        card.setImageLayout(Card.ImageLayout.FULL);
+	        card.addImage(Uri.fromFile(new File(picturePath)));
+	        setContentView(card.toView());
+	        Toast.makeText(getApplicationContext(), "Swipe backwards ro proceed or\nswipe forward to take new picture?", Toast.LENGTH_LONG).show();
+	        mGestureDetector = createGestureDetector(this);        
+	    }
 
 	    super.onActivityResult(requestCode, resultCode, data);
 	}

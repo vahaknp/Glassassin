@@ -1,7 +1,6 @@
 package com.tumo.fungame.activity;
 
-import com.tumo.fungame.R;
-import com.tumo.fungame.service.LiveCardService;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -10,11 +9,22 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.speech.RecognizerIntent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.tumo.fungame.R;
+import com.tumo.fungame.service.LiveCardService;
+
 public class LiveCardMenuActivity extends Activity {
+
+	public static final String KEY_PIC_PATH = "key_pic_path";
+
+	private static final int SPEECH_REQUEST = 0;
+	private static final int GUESS_PERSON = 1;
+
+	private boolean shouldMenuClose;
 
 	// binding to Service
 
@@ -42,6 +52,7 @@ public class LiveCardMenuActivity extends Activity {
 	private void doBind() {
 		Intent intent = new Intent(this, LiveCardService.class);
 		bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
+		mIsBound = true;
 	}
 
 	/*
@@ -74,6 +85,7 @@ public class LiveCardMenuActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		shouldMenuClose = true;
 		openOptionsMenu();
 	}
 
@@ -81,6 +93,10 @@ public class LiveCardMenuActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.activity_live_card, menu);
+		MenuItem itemGuessAdj = menu.findItem(R.id.menu_card_guess_adj);
+		MenuItem itemGuessPerson = menu.findItem(R.id.menu_card_guess_person);
+		itemGuessAdj.setVisible(!LiveCardService.isGameOver());
+		itemGuessPerson.setVisible(!LiveCardService.isGameOver());
 		return true;
 	}
 
@@ -88,20 +104,23 @@ public class LiveCardMenuActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_card_guess_adj:
-
+			shouldMenuClose = false;
+			displaySpeechRecognizer();
 			return true;
 
 		case R.id.menu_card_guess_person:
-			
+			shouldMenuClose = false;
+			Intent intent = new Intent(this, GuessPersonActivity.class);
+			intent.putExtra(KEY_PIC_PATH, mService.getPersonToGuess()
+					.getPicture());
+			startActivityForResult(intent, GUESS_PERSON);
 			return true;
 
 		case R.id.menu_card_settings:
 			goToMain();
-			finish();
 			return true;
 		case R.id.menu_card_exit:
 			stopLiveCard();
-			finish();
 			return true;
 
 		default:
@@ -109,10 +128,38 @@ public class LiveCardMenuActivity extends Activity {
 		}
 	}
 
+	private void displaySpeechRecognizer() {
+		Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+		startActivityForResult(intent, SPEECH_REQUEST);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == SPEECH_REQUEST && resultCode == RESULT_OK) {
+			List<String> results = data
+					.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+			String spokenText = results.get(0);
+
+			mService.updateCard(this, spokenText);
+		}
+		if (requestCode == GUESS_PERSON && resultCode == RESULT_OK) {
+			int value = data.getIntExtra("result", 0);
+			LiveCardService.setGameOver(true);
+			if (value == 1) {
+				LiveCardService.setGuessed(true);
+			}
+			mService.updateCard(this, "");
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+		finish();
+	}
+
 	@Override
 	public void onOptionsMenuClosed(Menu menu) {
 		super.onOptionsMenuClosed(menu);
-		finish();
+		if (shouldMenuClose) {
+			finish();
+		}
 	}
 
 	private void stopLiveCard() {
@@ -122,11 +169,5 @@ public class LiveCardMenuActivity extends Activity {
 	private void goToMain() {
 		Intent intent = new Intent(this, MainActivity.class);
 		startActivity(intent);
-	}
-
-	private void testService() {
-		if (mIsBound) {
-			mService.updateCard(this);
-		}
 	}
 }

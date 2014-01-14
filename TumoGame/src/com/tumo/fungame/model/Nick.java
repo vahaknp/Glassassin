@@ -9,15 +9,25 @@ public class Nick implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private String dbName;
 	private long id;
 	private String name;
 
 	public Nick() {
 	}
 
-	public Nick(long id, String name) {
+	public Nick(String dbName, long id, String name) {
+		this.dbName = dbName;
 		this.id = id;
 		this.name = name;
+	}
+
+	public String getDbName() {
+		return dbName;
+	}
+
+	public void setDbName(String dbName) {
+		this.dbName = dbName;
 	}
 
 	public long getId() {
@@ -35,4 +45,10 @@ public class Nick implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
+
 }

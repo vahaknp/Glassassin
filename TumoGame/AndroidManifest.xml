@@ -9,6 +9,7 @@
         android:targetSdkVersion="15" />
 
     <application
+        android:name=".TumoGameApp"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -31,9 +32,29 @@
             android:label="@string/title_activity_manage_db" >
         </activity>
         <activity
+            android:name="com.tumo.fungame.activity.EditDbActivity"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/title_activity_edit_db" >
+        </activity>
+        <activity
             android:name="com.tumo.fungame.activity.SelectDbActivity"
             android:icon="@drawable/ic_launcher"
             android:label="@string/title_activity_select_db" >
+        </activity>
+        <activity
+            android:name="com.tumo.fungame.activity.ViewAllActivity"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/title_activity_view_all" >
+        </activity>
+        <activity
+            android:name="com.tumo.fungame.activity.AddPersonActivity"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/title_activity_add_person" >
+        </activity>
+        <activity
+            android:name="com.tumo.fungame.activity.GuessPersonActivity"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/title_activity_guess_person" >
         </activity>
         <activity
             android:name="com.tumo.fungame.activity.LiveCardMenuActivity"

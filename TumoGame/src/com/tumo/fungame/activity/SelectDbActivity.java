@@ -16,12 +16,12 @@ import com.google.android.glass.app.Card;
 import com.google.android.glass.widget.CardScrollAdapter;
 import com.google.android.glass.widget.CardScrollView;
 import com.tumo.fungame.R;
+import com.tumo.fungame.dao.PersonDao;
 import com.tumo.fungame.service.LiveCardService;
 
 public class SelectDbActivity extends Activity {
 
-	public static final String KEY_NAME = "key_name";
-	public static final String KEY_IMAGE = "key_image";
+	public static final String KEY_DB_NAME = "key_name";
 
 	private List<Card> mCards;
 	private CardScrollView mCardScrollView;
@@ -64,8 +64,7 @@ public class SelectDbActivity extends Activity {
 			Intent intent = new Intent(SelectDbActivity.this,
 					LiveCardService.class);
 			Bundle bundle = new Bundle();
-			bundle.putString(KEY_NAME, card.getText());
-			bundle.putParcelable(KEY_IMAGE, card.getImage(0));
+			bundle.putString(KEY_DB_NAME, card.getText());
 			intent.putExtras(bundle);
 			startService(intent);
 			finish();
@@ -73,18 +72,15 @@ public class SelectDbActivity extends Activity {
 	};
 
 	private void createCards() {
-		List<Player> players = new ArrayList<SelectDbActivity.Player>();
-		players.add(new Player("Messi", "Argentina", R.drawable.messi_2));
-		players.add(new Player("Neymar", "Brazil", R.drawable.neymar));
-		players.add(new Player("Lavezzi", "Argentina", R.drawable.lavezzi));
+		List<String> dbs = PersonDao.getDbNames();
+		dbs.add(0, PersonDao.DB_ALL);
 		mCards = new ArrayList<Card>();
 
-		for (Player player : players) {
+		for (String string : dbs) {
 			Card card = new Card(this);
-			card.setText(player.getName());
-			card.setFootnote(player.getCountry());
-			card.setImageLayout(Card.ImageLayout.LEFT);
-			card.addImage(player.getImageId());
+			card.setImageLayout(Card.ImageLayout.FULL);
+			card.addImage(R.drawable.database);
+			card.setText(string);
 			mCards.add(card);
 		}
 	}
@@ -115,43 +111,5 @@ public class SelectDbActivity extends Activity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			return mCards.get(position).toView();
 		}
-	}
-
-	private class Player {
-		private String name;
-		private String country;
-		private int imageId;
-
-		public Player(String name, String country, int imageId) {
-			super();
-			this.name = name;
-			this.country = country;
-			this.imageId = imageId;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public String getCountry() {
-			return country;
-		}
-
-		public void setCountry(String country) {
-			this.country = country;
-		}
-
-		public int getImageId() {
-			return imageId;
-		}
-
-		public void setImageId(int imageId) {
-			this.imageId = imageId;
-		}
-
 	}
 }

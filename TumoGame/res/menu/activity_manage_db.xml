@@ -2,12 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/menu_manage_send"
-        android:icon="@drawable/ic_share_50"
-        android:title="@string/menu_item_send"/>
-    <item
         android:id="@+id/menu_manage_edit"
         android:icon="@drawable/ic_pen_50"
         android:title="@string/menu_item_edit"/>
+    <item
+        android:id="@+id/menu_manage_send"
+        android:enabled="false"
+        android:icon="@drawable/ic_share_50"
+        android:title="@string/menu_item_send"/>
 
 </menu>

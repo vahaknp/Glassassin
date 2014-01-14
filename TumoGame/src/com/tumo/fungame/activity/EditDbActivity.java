@@ -9,7 +9,7 @@ import android.view.MenuItem;
 
 import com.tumo.fungame.R;
 
-public class ManageDbActivity extends Activity {
+public class EditDbActivity extends Activity {
 
 	private boolean shouldMenuClose;
 
@@ -28,22 +28,23 @@ public class ManageDbActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater menuInflater = getMenuInflater();
-		menuInflater.inflate(R.menu.activity_manage_db, menu);
+		menuInflater.inflate(R.menu.activity_edit_db, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.menu_manage_send:
+		case R.id.menu_edit_add:
 			shouldMenuClose = false;
-			// finish();//TODO
+			Intent intentAdd = new Intent(this, AddPersonActivity.class);
+			startActivity(intentAdd);
 			return true;
 
-		case R.id.menu_manage_edit:
+		case R.id.menu_edit_view_all:
 			shouldMenuClose = false;
-			Intent intentEdit = new Intent(this, EditDbActivity.class);
-			startActivity(intentEdit);
+			Intent intentViewAll = new Intent(this, ViewAllActivity.class);
+			startActivity(intentViewAll);
 			return true;
 
 		default:

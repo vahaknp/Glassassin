@@ -1,6 +1,7 @@
 package com.tumo.fungame.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Person implements Serializable {
@@ -10,24 +11,39 @@ public class Person implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private String dbName;
 	private long id;
 	private String name;
 	private String surname;
 	private int gender;
 	private String picture;
+	private String location;
 
 	private List<Nick> nicks;
 
 	public Person() {
+		nicks = new ArrayList<Nick>();
 	}
 
-	public Person(long id, String name, String surname, int gender,
-			String picture) {
+	public Person(String dbName, long id, String name, String surname,
+			int gender, String picture, String location) {
+		super();
+		this.dbName = dbName;
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
 		this.gender = gender;
 		this.picture = picture;
+		this.location = location;
+		nicks = new ArrayList<Nick>();
+	}
+
+	public String getDbName() {
+		return dbName;
+	}
+
+	public void setDbName(String dbName) {
+		this.dbName = dbName;
 	}
 
 	public long getId() {
@@ -70,6 +86,14 @@ public class Person implements Serializable {
 		this.picture = picture;
 	}
 
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
 	public List<Nick> getNicks() {
 		return nicks;
 	}
@@ -78,7 +102,24 @@ public class Person implements Serializable {
 		this.nicks = nicks;
 	}
 
-	private static class Gender {
+	public String nicksToString() {
+		String ans = "";
+		for (Nick nick : nicks) {
+			ans += nick.toString() + "\n";
+		}
+		return ans;
+	}
+
+	public String beautify() {
+		String res = "Gender: " + (getGender() == 1 ? "male" : "female") + "\n"
+				+ "Location: " + getLocation() + "\n" + "\n";
+
+		res += nicksToString();
+
+		return res;
+	}
+
+	public static class Gender {
 		public static final int MAN = 1;
 		public static final int WOMAN = 2;
 	}
